@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use \App\Enums\Roles;
+use \App\Enums\UserStatus;
 return new class extends Migration
 {
     /**
@@ -15,8 +16,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('mobile')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', Roles::values())->default(Roles::USER->value);
+            $table->enum('status', UserStatus::values())->default(UserStatus::ACTIVE->value);
+            $table->string('image')->nullable();
+            $table->string('device_name')->nullable();
+            $table->string('identity_number')->nullable();
+            $table->string('doctor')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
